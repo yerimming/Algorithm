@@ -2,34 +2,23 @@ function solution(schedules, timelogs, startday) {
     let result = 0;
     
     for(let i = 0; i < schedules.length; i++) {
-        const schedule = schedules[i]; 
-        const timelog = timelogs[i];
+        let limit = schedules[i] + 10;
         
-        let limit = schedule + 10;
-        if(schedule % 100 >= 50) {
-            limit += 40;
-        }
+        if(schedules[i] % 100 >= 50) limit += 40;
         
-        let day = startday;
-        let count = 0;
+        let isValid = true;
         
-        for(let j = 0; j < timelog.length; j++) {
-            const time = timelog[j]; 
+        for(let j = 0; j < 7; j++) {
+            const day = (startday + j - 1) % 7 + 1;
+            if (day >= 6) continue;
             
-            if(day === 7) {
-                day = 0;
-            } else if(day < 6) {
-                if(time <= limit) {
-                    count++;
-                }
+            if (timelogs[i][j] > limit) {
+                isValid = false;
+                break;
             }
-            
-            day++;
         }
         
-        if (count === 5) {
-            result++;
-        }
+        if (isValid) result++;
     }
     
     return result;
