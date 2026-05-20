@@ -1,23 +1,19 @@
 function solution(k, dungeons) {
-    // 던전 순열 구하기
     const permutations = getPermutations(dungeons);
     
     const result = [];
     
-    for (let i = 0; i < permutations.length; i++) {
+    for (const permutation of permutations) {
         let fatigue = k;
         let count = 0;
         
-        for (const dungeon of permutations[i]) {
-            
-            const [ required, cost ] = dungeon;
-            
-            if (fatigue < required) continue;
+        for (const [required, cost] of permutation) {
+            if (required > fatigue) continue;
             
             fatigue -= cost;
             count++;
         }
-
+        
         result.push(count);
     }
     
@@ -29,14 +25,14 @@ function getPermutations(dungeons) {
     const visited = Array(dungeons.length).fill(false);
     
     function dfs(path) {
+        
         if (path.length === dungeons.length) {
             result.push([...path]);
             return;
         }
         
         for (let i = 0; i < dungeons.length; i++) {
-            // 이미 추가한 던전이면 패스
-            if (visited[i]) continue;
+            if(visited[i]) continue;
             
             visited[i] = true;
             path.push([...dungeons[i]]);
