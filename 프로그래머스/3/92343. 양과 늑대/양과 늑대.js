@@ -14,12 +14,15 @@ function solution(info, edges) {
             wolf++;
         }
         
+        // 잡아먹힌다!! 돌아가
         if (wolf >= sheep) return;
         
         sheepCount = Math.max(sheepCount, sheep);
         
         for (const next of candidates) {
+            // 이제 방문할 곳은 후보에서 삭제
             const nextCandidates = candidates.filter(v => v !== next);
+            // 방문할 노드의 자식 노드들을 후보에 추가
             nextCandidates.push(...graph[next]);
             
             dfs(next, sheep, wolf, nextCandidates);
