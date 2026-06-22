@@ -1,5 +1,6 @@
 function solution(n, cores) {
     
+    // 코어 수보다 작업 개수가 더 작으면 n번째 코어가 정답
     if (n <= cores.length) {
         return n;
     }
@@ -14,6 +15,7 @@ function solution(n, cores) {
         
         const work = processed(mid);
         
+        // 작업을 다 끝낼 수 있는 시간이면 더 적은 시간에도 가능한지 확인
         if (work >= n) {
             t = mid;
             right = mid - 1;
@@ -36,37 +38,6 @@ function solution(n, cores) {
     
     // t-1초까지 작업하고 남은 작업의 수
     let remain = n - processed(t - 1);
-    
-    // t초에 작업 끝나는 코어들 구하기
-//     const candidates = [];
-    
-//     for (const core of cores) {
-//         if (t % core === 0) {
-//             candidates.push(core);
-//         }
-//     }
-    
-//     // remain번째 코어 구하기
-//     let core = 0;
-    
-//     for (let i = 0; i < candidates.length; i++) {
-//         if (i + 1 === remain) {
-//             core = candidates[i];
-//             break;
-//         }
-//     }
-    
-//     // 코어의 번호 구해서 반환
-//     let result  = 0;
-    
-//     for (let i = 0; i < cores.length; i++) {
-//         if (cores[i] === core) {
-//             result = i + 1;
-//             break;
-//         }
-//     }
-    
-//     return result;
     
     for (let i = 0; i < cores.length; i++) {
         // t초에 작업 끝내는 코어 만나면
